@@ -6,7 +6,7 @@ from packages import *
 import random
 
 test_set = []
-for i in range(1,10000):
+for i in range(1,100):
     n = random.randint(1,i)
     z = random.randint(1,i)
     test_set.append([n,z])
@@ -41,6 +41,21 @@ class EDA():
             print(f'Kurtosis in normality Range: {EDA.kurtosis(self)}')
         else: print(f'Kurtosis NOT in normality Range: {EDA.kurtosis(self)}')
 
+class EDA_Chart():
+    def scatter_plot(x,y,title, xlab, ylab, sample_of_50):
+        x_chart = plt.figure()
+        if sample_of_50 == True:
+            x_sample, y_sample = x.sample(50), y.sample(50)
+        elif sample_of_50 == True:
+            x_chart = plt.scatter(x_sample, y_sample)
+        else:
+            x_chart = plt.scatter(x,y)
+        plt.title = str(title)
+        plt.xlabel = str(xlab)
+        plt.ylabel = str(ylab)
+        return x_chart.show() # need to fix this line to figure out what's going on.
+        #need to see what the relationship is between the variables.
+        #df.sample(50) shows a random sample of 50 in the data frame you're looking at
 
 print(f'Skewness: {EDA.skew(test_set)}')
 print(f'Kurtosis: {EDA.kurtosis(test_set)}')
