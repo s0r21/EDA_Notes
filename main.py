@@ -1,9 +1,13 @@
 # this script is meant to help processing the data for the EDA process
+import matplotlib.pyplot as plt
 import pandas as pd
 import scipy.stats
 
 from packages import *
 import random
+
+# Note: when rebuilding this code, use do a print on every function
+# to actually give the results that they are looking for. Maybe?
 
 test_set = []
 for i in range(1,100):
@@ -11,6 +15,8 @@ for i in range(1,100):
     z = random.randint(1,i)
     test_set.append([n,z])
 test_set = pd.DataFrame(test_set)
+
+test_set2 = [[1,2,3,4,5,6,7,8,9,10],[10,9,8,7,6,5,4,3,2,1]]
 
 class EDA():
     def kurtosis(self):
@@ -42,26 +48,33 @@ class EDA():
         else: print(f'Kurtosis NOT in normality Range: {EDA.kurtosis(self)}')
 
 class EDA_Chart():
-    def scatter_plot(x,y,title, xlab, ylab, sample_of_50):
-        x_chart = plt.figure()
-        if sample_of_50 == True:
-            x_sample, y_sample = x.sample(50), y.sample(50)
-        elif sample_of_50 == True:
-            x_chart = plt.scatter(x_sample, y_sample)
-        else:
-            x_chart = plt.scatter(x,y)
-        plt.title = str(title)
-        plt.xlabel = str(xlab)
-        plt.ylabel = str(ylab)
-        return x_chart.show() # need to fix this line to figure out what's going on.
-        #need to see what the relationship is between the variables.
-        #df.sample(50) shows a random sample of 50 in the data frame you're looking at
+    def tips_for_charts(self):
+        print('Just going to make this section a help guide:'
+              ' 1.) To make a scatter plot you will need to get matplotlib.pyplot (plt.scatter)'
+              ' 2.) After getting that integrating pyplot into your code, use it to generate a plot '
+              '     and see how the distribution between x and y is.'
+              ' 3.) Regression Model-> ')
+    def regression(x,y):
+        reg_info = scipy.stats.linregress(x,y)
+        slope = print(f'Slope: {reg_info[0]}')
+        intercept = print(f'Slope: {reg_info[1]}')
+        correl = print(f'Correl: {reg_info[2]}')
+        pval =  print(f'Correl: {reg_info[3]}')
+        return slope, intercept, correl, pval
 
 print(f'Skewness: {EDA.skew(test_set)}')
 print(f'Kurtosis: {EDA.kurtosis(test_set)}')
 print(f'Data Summary: {EDA.data_desc(test_set)}')
 print(f'Pearsons Correl: {EDA.correl(test_set)}')
 print(EDA.norm_or_not(test_set[0]))
+print(f'Pearsons Correl and Pvalue: {EDA.correl_with_p(y_in_df = test_set[0], df = test_set[1])}')
+EDA_Chart.regression(test_set[0], test_set[1])
 
-print(f'Pearsons Correl and Pvalue: {EDA.correl_with_p(y_in_df = test_set[0], df = test_set)}')
 
+
+# Building the chart:
+#plt.plot(test_set2[0], test_set2[1])
+#plt.title ('Test Set First vs Second Column')
+#plt.xlabel('Test_zero_position')
+#plt.ylabel('Test_first_position')
+#plt.show()
